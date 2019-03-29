@@ -13,6 +13,7 @@ pipeline {
                     env.DEPLOY_BUILD_DATE = sh (returnStdout: true, script: "date -u +'%Y-%m-%dT%H:%M:%SZ'").trim()
                     env.IS_NEW_VERSION = sh (returnStdout: true, script: "[ '${env.DEPLOY_VERSION}' ] && echo 'YES'").trim()
                     env.COMMITS_ON_MASTER = sh(script: "git rev-list HEAD --count", returnStdout: true).trim()
+                    env.TAG = sh(returnStdout: true, script: 'git tag --sort version:refname | tail -1').trim()
                 }
             }
         }
@@ -28,7 +29,7 @@ pipeline {
                          passwordVariable: 'GIT_PASS', usernameVariable: 'GIT_USER')]) {
                         sh('git config --global user.email thegioiitjob@gmail.com')
                         sh('git config --global user.name xuqupro')
-                        setTags("${env.DEPLOY_MAJOR_VERSION}")
+                        getTagVersion()
                         echo("${env.DEPLOY_MAJOR_VERSION}")
                         echo("${env.COMMITS_ON_MASTER}")
                         // sh('git tag -a "v${DEPLOY_VERSION}" -m "Job: pipeline_no1"')
@@ -40,8 +41,6 @@ pipeline {
         }
     }
 }
-
-def setTags(tag){
-    double converted=Double.parseDouble("$tag");
-    echo "${converted}"
+def getTagVersion() {
+    echo "${env.TAG}"
 }
