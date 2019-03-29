@@ -25,8 +25,8 @@ pipeline {
                     sh('git remote -v')
                         withCredentials([usernamePassword(credentialsId: 'username-with-password', 
                          passwordVariable: 'GIT_PASS', usernameVariable: 'GIT_USER')]) {
-                        // sh('git config --global user.email thegioiitjob@gmail.com')
-                        // sh('git config --global user.name xuqupro')
+                        sh('git config --global user.email thegioiitjob@gmail.com')
+                        sh('git config --global user.name xuqupro')
                         // sh('git tag -a "v${DEPLOY_VERSION}" -m "Job: pipeline_no1"')
                         // sh('git push https://$GIT_USER:$GIT_PASS@github.com/xuqupro/helloworld.git --tags')
                        // sh('git push origin 1.9')
