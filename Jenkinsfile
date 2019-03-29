@@ -29,8 +29,8 @@ pipeline {
                          passwordVariable: 'GIT_PASS', usernameVariable: 'GIT_USER')]) {
                         sh('git config --global user.email thegioiitjob@gmail.com')
                         sh('git config --global user.name xuqupro')
-                        getTagVersion()
-                        // echo("${nversion}")
+                        def nversion=getTagVersion()
+                        echo("${nversion}")
                         echo("${env.DEPLOY_MAJOR_VERSION}")
                         echo("${env.COMMITS_ON_MASTER}")
                         // sh('git tag -a "v${DEPLOY_VERSION}" -m "Job: pipeline_no1"')
