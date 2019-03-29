@@ -42,6 +42,6 @@ pipeline {
 }
 
 def setTags(tag){
-    double converted=Double.parseDouble($tag);
+    double converted=Double.parseDouble(tag);
     echo("${converted}")
 }
