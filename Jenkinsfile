@@ -30,7 +30,7 @@ pipeline {
                         // sh('git tag -a "v${DEPLOY_VERSION}" -m "Job: pipeline_no1"')
                         // sh('git push https://$GIT_USER:$GIT_PASS@github.com/xuqupro/helloworld.git --tags')
                        // sh('git push origin 1.9')
-                       sh('echo ${env.DEPLOY_VERSION}')
+                       echo("${env.DEPLOY_VERSION}")
                     }
                 }
             }
