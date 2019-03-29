@@ -30,6 +30,7 @@ pipeline {
                         sh('git config --global user.email thegioiitjob@gmail.com')
                         sh('git config --global user.name xuqupro')
                         def nversion=getTagVersion()
+                        echo("${nversion}")
                         echo("${env.DEPLOY_MAJOR_VERSION}")
                         echo("${env.COMMITS_ON_MASTER}")
                         // sh('git tag -a "v${DEPLOY_VERSION}" -m "Job: pipeline_no1"')
@@ -48,5 +49,7 @@ def getTagVersion() {
         return "1.0"
     }
     tag=tag.trim()
-    return tag
+    double rate=(Double.parseDouble("${tag}")+Double.parseDouble("0.1"))
+    double version_auto =  Math.round(rate * 10) / 10 
+    return version_auto
 }
