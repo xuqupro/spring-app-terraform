@@ -29,7 +29,7 @@ pipeline {
                          passwordVariable: 'GIT_PASS', usernameVariable: 'GIT_USER')]) {
                         sh('git config --global user.email thegioiitjob@gmail.com')
                         sh('git config --global user.name xuqupro')
-                        getTagVersion()
+                        def nversion=getTagVersion()
                         echo("${env.DEPLOY_MAJOR_VERSION}")
                         echo("${env.COMMITS_ON_MASTER}")
                         // sh('git tag -a "v${DEPLOY_VERSION}" -m "Job: pipeline_no1"')
@@ -42,6 +42,11 @@ pipeline {
     }
 }
 def getTagVersion() {
-    def tag=env.TAG
-    echo "${tag}"
+    def tag=shell(returnStdout: true, script: 'git tag --sort version:refname | tail -1').trim()
+    if (tag==null || tag.size() == 0) {
+        echo "No existing tag found. Using version: ${version}"
+        return "1.0"
+    }
+    tag=tag.trim()
+    return tag
 }
