@@ -42,5 +42,6 @@ pipeline {
     }
 }
 def getTagVersion() {
-    echo "${env.TAG}"
+    def tag=env.TAG
+    echo "${tag}"
 }
