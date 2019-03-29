@@ -43,7 +43,8 @@ pipeline {
     }
 }
 def getTagVersion() {
-    def tag=shell(returnStdout: true, script: 'git tag --sort version:refname | tail -1').trim()
+    // def tag=shell(returnStdout: true, script: 'git tag --sort version:refname | tail -1').trim()
+    def tag=sh (returnStdout: true, script: "git fetch --tags | git describe --tags `git rev-list --tags --max-count=1`").trim()
     if (tag==null || tag.size() == 0) {
         echo "No existing tag found. Using version: ${version}"
         return "1.0"
