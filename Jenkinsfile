@@ -12,6 +12,7 @@ pipeline {
                     env.DEPLOY_COMMIT_HASH = sh (returnStdout: true, script: "git rev-parse HEAD | cut -c1-7").trim()
                     env.DEPLOY_BUILD_DATE = sh (returnStdout: true, script: "date -u +'%Y-%m-%dT%H:%M:%SZ'").trim()
                     env.IS_NEW_VERSION = sh (returnStdout: true, script: "[ '${env.DEPLOY_VERSION}' ] && echo 'YES'").trim()
+                    env.COMMITS_ON_MASTER = sh(script: "git rev-list HEAD --count", returnStdout: true).trim()
                 }
             }
         }
@@ -27,11 +28,12 @@ pipeline {
                          passwordVariable: 'GIT_PASS', usernameVariable: 'GIT_USER')]) {
                         sh('git config --global user.email thegioiitjob@gmail.com')
                         sh('git config --global user.name xuqupro')
+                        echo("${env.DEPLOY_VERSION}")
+                        echo("${env.DEPLOY_MAJOR_VERSION}")
+                        echo("${env.COMMITS_ON_MASTER}")
                         // sh('git tag -a "v${DEPLOY_VERSION}" -m "Job: pipeline_no1"')
                         // sh('git push https://$GIT_USER:$GIT_PASS@github.com/xuqupro/helloworld.git --tags')
                        // sh('git push origin 1.9')
-                       echo("${env.DEPLOY_VERSION}")
-                       echo("${env.DEPLOY_MAJOR_VERSION}")
                     }
                 }
             }
