@@ -31,7 +31,7 @@ pipeline {
                         // sh('git push https://$GIT_USER:$GIT_PASS@github.com/xuqupro/helloworld.git --tags')
                        // sh('git push origin 1.9')
                        echo("${env.DEPLOY_VERSION}")
-                       echo("${env.DEPLOY_COMMIT_HASH}")
+                       echo("${env.DEPLOY_MAJOR_VERSION}")
                     }
                 }
             }
