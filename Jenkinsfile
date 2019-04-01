@@ -1,10 +1,6 @@
 #!/usr/bin/env groovy
-import hudson.model.*
-import hudson.EnvVars
-import groovy.json.JsonSlurperClassic
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
-import java.net.URL
 
 pipeline {
     agent any
@@ -47,6 +43,11 @@ pipeline {
                 }
             }
         }
+        stage('notification') {
+            steps {
+                notification()
+            }
+        }
         stage('Build') {
             steps {
                 build()
@@ -64,18 +65,9 @@ def notification() {
     def NOTIFICATION_SUCCESS = "'{\"text\":\"Hello World!, ${DATE}\"}'"
     sh "curl -X POST -H 'Content-type: application/json' --data ${NOTIFICATION_SUCCESS} ${API_A}"
 }
-
 def build() {
-    // try {
-    //     echo "\u2600 BUILD_URL=${env.BUILD_URL}"
-    //     def workspace = pwd()
-    //     echo "\u2600 workspace=${workspace}"
-    // }catch(exec) {
-    //     currentBuild.result = "FAILURE"
-    // }
-    echo "avc"
+    echo "nod"
 }
-
 def getTagVersion(versionType) {
     // def tag=shell(returnStdout: true, script: 'git tag --sort version:refname | tail -1').trim()
     def tag=sh (returnStdout: true, script: "git fetch --tags | git describe --tags `git rev-list --tags --max-count=1`").trim()
