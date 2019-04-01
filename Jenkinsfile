@@ -50,8 +50,18 @@ def getTagVersion() {
         echo "No existing tag found. Using version: ${version}"
         return "0.1"
     }
-    // tag=tag.trim()
-    double rate = (Double.parseDouble("${tag}") + Double.parseDouble("0.1"))
-    // double version_auto =  Math.round(rate * 10) / 10 
-    return rate
+    tag=tag.trim()
+    sh "git fetch"
+
+    def version_curent = sh(returnStdout: true, script: "git tag")
+    def l = (ArrayList<String>) version_curent.split()
+
+    if (l.size() == 0) {
+        l.add("v0.0")
+    } 
+
+    def beforeColon = l.pop().substring(1)
+    double rate = (Double.parseDouble("${beforeColon}") + Double.parseDouble("0.1"))
+    double version_auto =  Math.round(rate * 10) / 10 
+    return version_auto
 }
