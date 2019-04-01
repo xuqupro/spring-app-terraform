@@ -50,7 +50,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                build()
+                buildpr()
             }
         }
     }
@@ -65,9 +65,11 @@ def notification() {
     def NOTIFICATION_SUCCESS = "'{\"text\":\"Hello World!, ${DATE}\"}'"
     sh "curl -X POST -H 'Content-type: application/json' --data ${NOTIFICATION_SUCCESS} ${API_A}"
 }
-def build() {
+
+def buildpr() {
     echo "nod"
 }
+
 def getTagVersion(versionType) {
     // def tag=shell(returnStdout: true, script: 'git tag --sort version:refname | tail -1').trim()
     def tag=sh (returnStdout: true, script: "git fetch --tags | git describe --tags `git rev-list --tags --max-count=1`").trim()
