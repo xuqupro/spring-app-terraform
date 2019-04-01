@@ -29,8 +29,8 @@ pipeline {
                          passwordVariable: 'GIT_PASS', usernameVariable: 'GIT_USER')]) {
                         sh('git config --global user.email thegioiitjob@gmail.com')
                         sh('git config --global user.name xuqupro')
-
-                        getTagVersion()
+                        def versionType="MAJOR"
+                        getTagVersion(versionType)
                         // echo("${nversion}")
                         echo("${env.DEPLOY_MAJOR_VERSION}")
                         echo("${env.COMMITS_ON_MASTER}")
@@ -43,7 +43,7 @@ pipeline {
         }
     }
 }
-def getTagVersion() {
+def getTagVersion(versionType) {
     // def tag=shell(returnStdout: true, script: 'git tag --sort version:refname | tail -1').trim()
     def tag=sh (returnStdout: true, script: "git fetch --tags | git describe --tags `git rev-list --tags --max-count=1`").trim()
     if (tag==null || tag.size() == 0) {
@@ -51,7 +51,15 @@ def getTagVersion() {
         return "0.1"
     }
     tag=tag.trim()
-    double rate = (Double.parseDouble("${tag}") + Double.parseDouble("0.1"))
+    double rate=0.0
+    switch(versionType){
+        case "MAJOR":
+            rate = (Double.parseDouble("${tag}") + Double.parseDouble("1.0"))
+            break
+        case "MINOR":
+            rate = (Double.parseDouble("${tag}") + Double.parseDouble("0.1"))
+            break
+    }
     double version_auto =  Math.round(rate * 10) / 10 
     echo "${version_auto}"
     return version_auto
