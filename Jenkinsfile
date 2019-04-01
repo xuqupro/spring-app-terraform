@@ -43,8 +43,10 @@ pipeline {
                 }
             }
         }
-        stage("notification"){
-            notification()
+        stage('notification') {
+            steps {
+                notification()
+            }
         }
     }
 }
