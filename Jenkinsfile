@@ -63,5 +63,8 @@ def getTagVersion() {
     def beforeColon = l.pop().substring(1)
     double rate = (Double.parseDouble("${beforeColon}") + Double.parseDouble("0.1"))
     double version_auto =  Math.round(rate * 10) / 10 
-    sh "echo '${version_auto}'"
+
+    sh "git tag v${version_auto}"
+    sh "git remote set-url origin https://nammapdientrai:Thn025381961@github.com/nammapdientrai/java-full-pipeline.git"
+    sh "git push origin v${version_auto}"
 }
