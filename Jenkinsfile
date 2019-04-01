@@ -1,6 +1,10 @@
 #!/usr/bin/env groovy
+import hudson.model.*
+import hudson.EnvVars
+import groovy.json.JsonSlurperClassic
 import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
+import java.net.URL
 
 pipeline {
     agent any
@@ -43,9 +47,9 @@ pipeline {
                 }
             }
         }
-        stage('notification') {
+        stage('Build') {
             steps {
-                notification()
+                build()
             }
         }
     }
@@ -54,23 +58,23 @@ def checkout(){
     checkout scm
 }
 
-def notification(){
+def notification() {
     def DATE = sh(returnStdout: true, script: "date +'%d-%m-%y'")
     def API_A = "https://hooks.slack.com/services/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"
     def NOTIFICATION_SUCCESS = "'{\"text\":\"Hello World!, ${DATE}\"}'"
     sh "curl -X POST -H 'Content-type: application/json' --data ${NOTIFICATION_SUCCESS} ${API_A}"
-
-
-    def attachments = [
-       [
-            text: 'I find your lack of..',
-            fallback: 'Hey Seems to be mad at yo you',
-            color: '#ff0000'
-       ]
-    ]
-
-    slackSend(channel: '#team-hoc-doi',attachments)
 }
+
+def build() {
+    try {
+        echo "\u2600 BUILD_URL=${env.BUILD_URL}"
+        def workspace = pwd()
+        echo "\u2600 workspace=${workspace}"
+    }catch(exec) {
+        currentBuild.result = "FAILURE"
+    }
+}
+
 def getTagVersion(versionType) {
     // def tag=shell(returnStdout: true, script: 'git tag --sort version:refname | tail -1').trim()
     def tag=sh (returnStdout: true, script: "git fetch --tags | git describe --tags `git rev-list --tags --max-count=1`").trim()
