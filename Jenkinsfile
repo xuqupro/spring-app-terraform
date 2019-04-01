@@ -47,10 +47,10 @@ def getTagVersion() {
     def tag=sh (returnStdout: true, script: "git fetch --tags | git describe --tags `git rev-list --tags --max-count=1`").trim()
     if (tag==null || tag.size() == 0) {
         echo "No existing tag found. Using version: ${version}"
-        return "1.0"
+        return "0.1"
     }
     tag=tag.trim()
-    def rate = Version.valueOf(tag) + Version.valueOf("0.1")
+    // def rate = Version.valueOf(tag) + Version.valueOf("0.1")
     // double version_auto =  Math.round(rate * 10) / 10 
-    return rate
+    return tag
 }
