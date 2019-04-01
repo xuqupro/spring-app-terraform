@@ -50,7 +50,7 @@ def getTagVersion() {
         return "1.0"
     }
     tag=tag.trim()
-    def rate = Version.valueOf("${tag}") + Version.valueOf("0.1")
+    Version rate = Version.valueOf("${tag}") + Version.valueOf("0.1")
     // double version_auto =  Math.round(rate * 10) / 10 
     return rate
 }
