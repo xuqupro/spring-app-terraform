@@ -51,8 +51,8 @@ def getTagVersion() {
         return "0.1"
     }
     tag=tag.trim()
-    
-    double rate = (Double.parseDouble("${tag}") + Double.parseDouble("0.1"))
-    double version_auto =  Math.round(rate * 10) / 10 
-    return version_auto
+    echo "${tag}"
+    // double rate = (Double.parseDouble("${tag}") + Double.parseDouble("0.1"))
+    // double version_auto =  Math.round(rate * 10) / 10 
+    // return version_auto
 }
