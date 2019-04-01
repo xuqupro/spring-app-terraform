@@ -66,13 +66,14 @@ def notification() {
 }
 
 def build() {
-    try {
-        echo "\u2600 BUILD_URL=${env.BUILD_URL}"
-        def workspace = pwd()
-        echo "\u2600 workspace=${workspace}"
-    }catch(exec) {
-        currentBuild.result = "FAILURE"
-    }
+    // try {
+    //     echo "\u2600 BUILD_URL=${env.BUILD_URL}"
+    //     def workspace = pwd()
+    //     echo "\u2600 workspace=${workspace}"
+    // }catch(exec) {
+    //     currentBuild.result = "FAILURE"
+    // }
+    echo "avc"
 }
 
 def getTagVersion(versionType) {
