@@ -48,11 +48,6 @@ pipeline {
                 notification()
             }
         }
-        stage('Build') {
-            steps {
-                buildpr()
-            }
-        }
     }
 }
 def checkout(){
@@ -64,16 +59,6 @@ def notification() {
     def API_A = "https://hooks.slack.com/services/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"
     def NOTIFICATION_SUCCESS = "'{\"text\":\"Hello World!, ${DATE}\"}'"
     sh "curl -X POST -H 'Content-type: application/json' --data ${NOTIFICATION_SUCCESS} ${API_A}"
-}
-
-def buildpr() {
-    try {
-        echo "\u2600 BUILD_URL=${env.BUILD_URL}"
-        def workspace = pwd()
-        echo "\u2600 workspace=${workspace}"
-    }catch(exc){
-        currentBuild.result = "FAILURE"
-    }
 }
 
 def getTagVersion(versionType) {
