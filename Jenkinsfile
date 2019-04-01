@@ -1,3 +1,7 @@
+#!/usr/bin/env groovy
+import groovy.json.JsonOutput
+import groovy.json.JsonSlurper
+
 pipeline {
     agent any
     tools {
@@ -31,8 +35,7 @@ pipeline {
                         def versionType="MAJOR"
                         def nversion=getTagVersion(versionType)
                         echo("${nversion}")
-                        echo("${env.DEPLOY_MAJOR_VERSION}")
-                        echo("${env.COMMITS_ON_MASTER}")
+                       
                         // sh('git tag -a "v${DEPLOY_VERSION}" -m "Job: pipeline_no1"')
                         // sh('git push https://$GIT_USER:$GIT_PASS@github.com/xuqupro/helloworld.git --tags')
                        // sh('git push origin 1.9')
@@ -40,7 +43,20 @@ pipeline {
                 }
             }
         }
+        stage("notification"){
+            notification()
+        }
     }
+}
+def checkout(){
+    checkout scm
+}
+
+def notification(){
+    def DATE = sh(returnStdout: true, script: "date +'%d-%m-%y'")
+    def API_A = "https://hooks.slack.com/services/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"
+    def NOTIFICATION_SUCCESS = "'{\"text\":\"NAM == SUCCESS, ${DATE}\"}'"
+    sh "curl -X POST -H 'Content-type: application/json' --data ${NOTIFICATION_SUCCESS} ${API_A}"
 }
 def getTagVersion(versionType) {
     // def tag=shell(returnStdout: true, script: 'git tag --sort version:refname | tail -1').trim()
