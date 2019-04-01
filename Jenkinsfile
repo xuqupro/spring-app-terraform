@@ -67,7 +67,13 @@ def notification() {
 }
 
 def buildpr() {
-    echo "nod"
+    try {
+        echo "\u2600 BUILD_URL=${env.BUILD_URL}"
+        def workspace = pwd()
+        echo "\u2600 workspace=${workspace}"
+    }catch(exc){
+        currentBuild.result = "FAILURE"
+    }
 }
 
 def getTagVersion(versionType) {
