@@ -71,13 +71,6 @@ def buildpr() {
         echo "\u2600 BUILD_URL=${env.BUILD_URL}"
         def workspace = pwd()
         echo "\u2600 workspace=${workspace}"
-
-        String recipient = 'thegioiitjob@gmail.com'
-        mail subject: "${env.JOB_NAME} (${env.BUILD_NUMBER}) success",
-            body: "It appears that ${env.BUILD_URL} is failing, somebody should do something about that",
-            to: recipient,
-            replyTo: recipient,
-            from: 'noreply@ci.jenkins.io'
     }catch(exc){
         currentBuild.result = "FAILURE"
     }
