@@ -30,7 +30,8 @@ pipeline {
                          passwordVariable: 'GIT_PASS', usernameVariable: 'GIT_USER')]) {
                         sh('git config --global user.email thegioiitjob@gmail.com')
                         sh('git config --global user.name xuqupro')
-                        def nversion=getTagVersion()
+                        
+                        getTagVersion()
                         echo("${nversion}")
                         echo("${env.DEPLOY_MAJOR_VERSION}")
                         echo("${env.COMMITS_ON_MASTER}")
@@ -45,12 +46,12 @@ pipeline {
 }
 def getTagVersion() {
     // def tag=shell(returnStdout: true, script: 'git tag --sort version:refname | tail -1').trim()
-    def tag=sh (returnStdout: true, script: "git fetch --tags | git describe --tags `git rev-list --tags --max-count=1`").trim()
-    if (tag==null || tag.size() == 0) {
-        echo "No existing tag found. Using version: ${version}"
-        return "0.1"
-    }
-    tag=tag.trim()
+    // def tag=sh (returnStdout: true, script: "git fetch --tags | git describe --tags `git rev-list --tags --max-count=1`").trim()
+    // if (tag==null || tag.size() == 0) {
+    //     echo "No existing tag found. Using version: ${version}"
+    //     return "0.1"
+    // }
+    // tag=tag.trim()
     sh "git fetch"
 
     def version_curent = sh(returnStdout: true, script: "git tag")
