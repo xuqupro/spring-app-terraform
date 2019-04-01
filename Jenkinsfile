@@ -13,7 +13,6 @@ pipeline {
                     env.DEPLOY_BUILD_DATE = sh (returnStdout: true, script: "date -u +'%Y-%m-%dT%H:%M:%SZ'").trim()
                     env.IS_NEW_VERSION = sh (returnStdout: true, script: "[ '${env.DEPLOY_VERSION}' ] && echo 'YES'").trim()
                     env.COMMITS_ON_MASTER = sh(script: "git rev-list HEAD --count", returnStdout: true).trim()
-                    env.TAG = sh(returnStdout: true, script: 'git tag --sort version:refname | tail -1').trim()
                 }
             }
         }
@@ -58,6 +57,9 @@ def getTagVersion(versionType) {
             break
         case "MINOR":
             rate = (Double.parseDouble("${tag}") + Double.parseDouble("0.1"))
+            break
+        default :
+            rate = (Double.parseDouble("${tag}") + Double.parseDouble("1.0"))
             break
     }
     double version_auto =  Math.round(rate * 10) / 10 
