@@ -50,6 +50,7 @@ def getTagVersion() {
         echo "No existing tag found. Using version: ${version}"
         return "0.1"
     }
+    echo "${tag}"
     tag=tag.trim()
     echo "${tag}"
     // double rate = (Double.parseDouble("${tag}") + Double.parseDouble("0.1"))
