@@ -1,4 +1,3 @@
-#!/usr/bin/env groovy
 pipeline {
     agent any
     tools {
@@ -30,7 +29,7 @@ pipeline {
                          passwordVariable: 'GIT_PASS', usernameVariable: 'GIT_USER')]) {
                         sh('git config --global user.email thegioiitjob@gmail.com')
                         sh('git config --global user.name xuqupro')
-                        
+
                         getTagVersion()
                         echo("${nversion}")
                         echo("${env.DEPLOY_MAJOR_VERSION}")
@@ -64,5 +63,5 @@ def getTagVersion() {
     def beforeColon = l.pop().substring(1)
     double rate = (Double.parseDouble("${beforeColon}") + Double.parseDouble("0.1"))
     double version_auto =  Math.round(rate * 10) / 10 
-    echo "${version_auto}"
+    sh "echo '${version_auto}'"
 }
