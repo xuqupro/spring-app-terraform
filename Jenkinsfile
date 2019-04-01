@@ -73,7 +73,7 @@ def buildpr() {
         echo "\u2600 workspace=${workspace}"
 
         String recipient = 'thegioiitjob@gmail.com'
-        mail subject: "${env.JOB_NAME} (${env.BUILD_NUMBER}) failed",
+        mail subject: "${env.JOB_NAME} (${env.BUILD_NUMBER}) success",
          body: "It appears that ${env.BUILD_URL} is failing, somebody should do something about that",
            to: recipient,
         replyTo: recipient,
