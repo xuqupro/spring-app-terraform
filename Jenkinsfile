@@ -59,6 +59,17 @@ def notification(){
     def API_A = "https://hooks.slack.com/services/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"
     def NOTIFICATION_SUCCESS = "'{\"text\":\"Hello World!, ${DATE}\"}'"
     sh "curl -X POST -H 'Content-type: application/json' --data ${NOTIFICATION_SUCCESS} ${API_A}"
+
+
+    def attachments = [
+       [
+            text: 'I find your lack of..',
+            fallback: 'Hey Seems to be mad at yo you',
+            color: '#ff0000'
+       ]
+    ]
+
+    slackSend(channel: '#team-hoc-doi',attachments)
 }
 def getTagVersion(versionType) {
     // def tag=shell(returnStdout: true, script: 'git tag --sort version:refname | tail -1').trim()
