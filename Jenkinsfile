@@ -63,5 +63,5 @@ def getTagVersion() {
     def beforeColon = l.pop().substring(1)
     double rate = (Double.parseDouble("${beforeColon}") + Double.parseDouble("0.1"))
     double version_auto =  Math.round(rate * 10) / 10 
-    return version_auto
+    echo "${version_auto}"
 }
