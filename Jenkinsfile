@@ -74,10 +74,10 @@ def buildpr() {
 
         String recipient = 'thegioiitjob@gmail.com'
         mail subject: "${env.JOB_NAME} (${env.BUILD_NUMBER}) success",
-         body: "It appears that ${env.BUILD_URL} is failing, somebody should do something about that",
-           to: recipient,
-        replyTo: recipient,
-        from: 'noreply@ci.jenkins.io'
+            body: "It appears that ${env.BUILD_URL} is failing, somebody should do something about that",
+            to: recipient,
+            replyTo: recipient,
+            from: 'noreply@ci.jenkins.io'
     }catch(exc){
         currentBuild.result = "FAILURE"
     }
