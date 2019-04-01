@@ -30,8 +30,8 @@ pipeline {
                         sh('git config --global user.email thegioiitjob@gmail.com')
                         sh('git config --global user.name xuqupro')
                         def versionType="MAJOR"
-                        getTagVersion(versionType)
-                        // echo("${nversion}")
+                        def nversion=getTagVersion(versionType)
+                        echo("${nversion}")
                         echo("${env.DEPLOY_MAJOR_VERSION}")
                         echo("${env.COMMITS_ON_MASTER}")
                         // sh('git tag -a "v${DEPLOY_VERSION}" -m "Job: pipeline_no1"')
@@ -61,6 +61,5 @@ def getTagVersion(versionType) {
             break
     }
     double version_auto =  Math.round(rate * 10) / 10 
-    echo "${version_auto}"
     return version_auto
 }
