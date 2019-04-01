@@ -57,7 +57,7 @@ def checkout(){
 def notification(){
     def DATE = sh(returnStdout: true, script: "date +'%d-%m-%y'")
     def API_A = "https://hooks.slack.com/services/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"
-    def NOTIFICATION_SUCCESS = "'{\"text\":\"NAM == SUCCESS, ${DATE}\"}'"
+    def NOTIFICATION_SUCCESS = "'{\"text\":\"Hello World!, ${DATE}\"}'"
     sh "curl -X POST -H 'Content-type: application/json' --data ${NOTIFICATION_SUCCESS} ${API_A}"
 }
 def getTagVersion(versionType) {
